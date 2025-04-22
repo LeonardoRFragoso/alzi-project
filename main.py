@@ -3,6 +3,7 @@ import os
 import tempfile
 import subprocess
 import shutil
+import sys  # <- necessário para obter o interpretador Python ativo
 
 # Título
 st.set_page_config(page_title="Conversão e Análise de Planilha", layout="centered")
@@ -27,12 +28,7 @@ if uploaded_file:
         st.info("🔄 Convertendo arquivo para .xlsx...")
         try:
             subprocess.run(
-                [
-                    r"C:/Users/leonardo.fragoso/Desktop/Projetos/alzi-project/venv/Scripts/python.exe",
-                    "C:/Users/leonardo.fragoso/Desktop/Projetos/alzi-project/convert.py",
-                    input_xls_path,
-                    converted_xlsx_path
-                ],
+                [sys.executable, "convert.py", input_xls_path, converted_xlsx_path],
                 check=True
             )
             st.success("✅ Conversão concluída.")
@@ -41,16 +37,13 @@ if uploaded_file:
             st.stop()
 
         # Copiar o arquivo convertido para local esperado por app.py
-        shutil.copy(converted_xlsx_path, "C:/Users/leonardo.fragoso/Desktop/Projetos/alzi-project/TC.xlsx")
+        shutil.copy(converted_xlsx_path, "TC.xlsx")
 
         # Rodar o script app.py para gerar a planilha output
         st.info("⚙️ Processando dados com app.py...")
         try:
             subprocess.run(
-                [
-                    r"C:/Users/leonardo.fragoso/Desktop/Projetos/alzi-project/venv/Scripts/python.exe",
-                    "C:/Users/leonardo.fragoso/Desktop/Projetos/alzi-project/app.py"
-                ],
+                [sys.executable, "app.py"],
                 check=True
             )
             st.success("📊 Planilha processada com sucesso!")
@@ -59,7 +52,7 @@ if uploaded_file:
             st.stop()
 
         # Copiar resultado para a pasta temporária e exibir para download
-        final_output_path = "C:/Users/leonardo.fragoso/Desktop/Projetos/alzi-project/TC_output.xlsx"
+        final_output_path = "TC_output.xlsx"
         shutil.copy(final_output_path, output_path)
 
         with open(output_path, "rb") as f:
