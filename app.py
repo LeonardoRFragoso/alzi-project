@@ -2,8 +2,8 @@ import pandas as pd
 from datetime import timedelta
 
 # --- CONFIGURAÇÕES ---
-input_path  = r"C:\Users\leonardo.fragoso\Desktop\Projetos\alzi-project\TC.xlsx"
-output_path = r"C:\Users\leonardo.fragoso\Desktop\Projetos\alzi-project\TC_output.xlsx"
+input_path  = "TC.xlsx"
+output_path = "TC_output.xlsx"
 sheet_in    = "Recuperada_Planilha1"
 threshold   = timedelta(minutes=45)
 
